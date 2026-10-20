@@ -1,1 +1,23 @@
-
+{
+  "manifest_version": 3,
+  "name": "Code Complexity Analyzer",
+  "version": "1.0.0",
+  "description": "Analyze cyclomatic complexity, maintainability index, and more for code blocks on any webpage.",
+  "permissions": ["activeTab", "storage", "contextMenus", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Code Complexity Analyzer"
+  }
+}
