@@ -1,1 +1,467 @@
+/* ─── CSS Custom Properties ───────────────────────────────────────────────── */
+:root {
+  --cca-bg: #1e1e2e;
+  --cca-bg2: #181825;
+  --cca-bg3: #11111b;
+  --cca-border: #313244;
+  --cca-text: #cdd6f4;
+  --cca-text-dim: #7f849c;
+  --cca-accent: #89b4fa;
+  --cca-green: #a6e3a1;
+  --cca-yellow: #f9e2af;
+  --cca-orange: #fab387;
+  --cca-red: #f38ba8;
+  --cca-pink: #f5c2e7;
+  --cca-radius: 10px;
+  --cca-shadow: 0 24px 64px rgba(0,0,0,0.6);
+  --cca-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+}
 
+/* ─── Wrapper & Analyze Button ────────────────────────────────────────────── */
+.cca-wrapper {
+  position: relative;
+  display: block;
+}
+
+.cca-wrapper:hover .cca-analyze-btn,
+.cca-analyze-btn:focus {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.cca-analyze-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 9999;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  background: linear-gradient(135deg, #89b4fa 0%, #b4befe 100%);
+  color: #1e1e2e;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--cca-font);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+  box-shadow: 0 2px 12px rgba(137,180,250,0.4);
+}
+
+.cca-analyze-btn:hover {
+  box-shadow: 0 4px 20px rgba(137,180,250,0.6);
+  transform: translateY(-1px);
+}
+
+.cca-analyze-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.cca-btn-icon {
+  font-size: 14px;
+}
+
+/* ─── Backdrop ────────────────────────────────────────────────────────────── */
+#cca-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999990;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(3px);
+  animation: cca-fade-in 0.2s ease;
+}
+
+/* ─── Main Panel ──────────────────────────────────────────────────────────── */
+#cca-panel {
+  position: fixed;
+  top: 50%;
+  right: 24px;
+  transform: translateY(-50%) translateX(30px);
+  z-index: 999999;
+  width: 420px;
+  max-width: calc(100vw - 48px);
+  max-height: 85vh;
+  background: var(--cca-bg);
+  border: 1px solid var(--cca-border);
+  border-radius: var(--cca-radius);
+  box-shadow: var(--cca-shadow);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--cca-font);
+  color: var(--cca-text);
+  opacity: 0;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  overflow: hidden;
+}
+
+#cca-panel.cca-panel-visible {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* ─── Panel Header ────────────────────────────────────────────────────────── */
+.cca-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: var(--cca-bg2);
+  border-bottom: 1px solid var(--cca-border);
+  flex-shrink: 0;
+}
+
+.cca-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cca-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cca-accent);
+  letter-spacing: 0.02em;
+}
+
+.cca-lang-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  background: var(--cca-border);
+  color: var(--cca-text-dim);
+  border-radius: 99px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.cca-close-btn {
+  background: none;
+  border: none;
+  color: var(--cca-text-dim);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s;
+  line-height: 1;
+}
+
+.cca-close-btn:hover {
+  background: var(--cca-border);
+  color: var(--cca-text);
+}
+
+/* ─── Panel Body ──────────────────────────────────────────────────────────── */
+.cca-panel-body {
+  padding: 18px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--cca-border) transparent;
+}
+
+/* ─── Severity Row ────────────────────────────────────────────────────────── */
+.cca-severity-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cca-severity-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.cca-sev-low    { background: rgba(166,227,161,0.15); color: var(--cca-green); border: 1px solid rgba(166,227,161,0.35); }
+.cca-sev-medium { background: rgba(249,226,175,0.15); color: var(--cca-yellow); border: 1px solid rgba(249,226,175,0.35); }
+.cca-sev-high   { background: rgba(250,179,135,0.15); color: var(--cca-orange); border: 1px solid rgba(250,179,135,0.35); }
+.cca-sev-very-high { background: rgba(243,139,168,0.15); color: var(--cca-red); border: 1px solid rgba(243,139,168,0.35); }
+
+.cca-sev-desc {
+  font-size: 12px;
+  color: var(--cca-text-dim);
+}
+
+/* ─── Metrics Grid ────────────────────────────────────────────────────────── */
+.cca-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.cca-metric-card {
+  background: var(--cca-bg2);
+  border: 1px solid var(--cca-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cca-metric-label {
+  font-size: 10px;
+  color: var(--cca-text-dim);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.cca-metric-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--cca-text);
+  line-height: 1;
+}
+
+/* ─── Section ─────────────────────────────────────────────────────────────── */
+.cca-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cca-section-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cca-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ─── Maintainability Index Bar ───────────────────────────────────────────── */
+.cca-mi-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cca-bar-track {
+  flex: 1;
+  height: 8px;
+  background: var(--cca-bg2);
+  border: 1px solid var(--cca-border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.cca-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cca-bar-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cca-text);
+  white-space: nowrap;
+}
+
+/* ─── Details / Collapsible ───────────────────────────────────────────────── */
+.cca-details {
+  background: var(--cca-bg2);
+  border: 1px solid var(--cca-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.cca-details summary {
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cca-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cca-details summary::before {
+  content: "▶";
+  font-size: 9px;
+  transition: transform 0.2s;
+}
+
+.cca-details[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.cca-details summary:hover {
+  color: var(--cca-text);
+}
+
+/* ─── Table ───────────────────────────────────────────────────────────────── */
+.cca-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.cca-table th,
+.cca-table td {
+  padding: 6px 10px;
+  text-align: left;
+  border-top: 1px solid var(--cca-border);
+}
+
+.cca-table th {
+  color: var(--cca-text-dim);
+  font-weight: 600;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.cca-table td code {
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 11px;
+  color: var(--cca-accent);
+}
+
+/* ─── Rank Badges ─────────────────────────────────────────────────────────── */
+.cca-rank {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.cca-rank-a { background: rgba(166,227,161,0.2); color: var(--cca-green); }
+.cca-rank-b { background: rgba(166,227,161,0.1); color: #94e2d5; }
+.cca-rank-c { background: rgba(249,226,175,0.2); color: var(--cca-yellow); }
+.cca-rank-d { background: rgba(250,179,135,0.2); color: var(--cca-orange); }
+.cca-rank-e { background: rgba(243,139,168,0.15); color: var(--cca-red); }
+.cca-rank-f { background: rgba(243,139,168,0.25); color: var(--cca-red); }
+
+/* ─── Halstead Grid ───────────────────────────────────────────────────────── */
+.cca-halstead-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+}
+
+.cca-hal-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 14px;
+  border-top: 1px solid var(--cca-border);
+  font-size: 12px;
+}
+
+.cca-hal-key { color: var(--cca-text-dim); }
+.cca-hal-val { color: var(--cca-text); font-weight: 600; font-family: monospace; }
+
+/* ─── Suggestions ─────────────────────────────────────────────────────────── */
+.cca-suggestions {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cca-suggestions li {
+  font-size: 13px;
+  color: var(--cca-text);
+  padding: 8px 12px;
+  background: var(--cca-bg2);
+  border: 1px solid var(--cca-border);
+  border-left: 3px solid var(--cca-accent);
+  border-radius: 6px;
+  line-height: 1.5;
+}
+
+/* ─── Error Box ───────────────────────────────────────────────────────────── */
+.cca-error-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 24px;
+  text-align: center;
+}
+
+.cca-error-icon { font-size: 36px; }
+
+.cca-error-msg {
+  font-size: 14px;
+  color: var(--cca-red);
+  font-weight: 600;
+}
+
+.cca-error-hint {
+  font-size: 12px;
+  color: var(--cca-text-dim);
+  line-height: 1.6;
+}
+
+.cca-error-hint code {
+  background: var(--cca-bg3);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  color: var(--cca-accent);
+}
+
+/* ─── Animations ──────────────────────────────────────────────────────────── */
+@keyframes cca-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────────────────────── */
+.cca-panel-body::-webkit-scrollbar {
+  width: 5px;
+}
+.cca-panel-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+.cca-panel-body::-webkit-scrollbar-thumb {
+  background: var(--cca-border);
+  border-radius: 99px;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 500px) {
+  #cca-panel {
+    top: auto;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    border-radius: var(--cca-radius) var(--cca-radius) 0 0;
+    transform: translateY(30px);
+    max-height: 80vh;
+  }
+
+  #cca-panel.cca-panel-visible {
+    transform: translateY(0);
+  }
+
+  .cca-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
