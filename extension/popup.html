@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code Complexity Analyzer</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <span class="icon">⚡</span>
+      <div>
+        <h1 class="title">Code Complexity Analyzer</h1>
+        <p class="subtitle">v1.0.0</p>
+      </div>
+    </header>
+
+    <section class="section">
+      <label class="label" for="backendUrl">Backend URL</label>
+      <div class="input-row">
+        <input
+          type="text"
+          id="backendUrl"
+          class="input"
+          placeholder="http://localhost:5000"
+          spellcheck="false"
+        />
+        <button id="saveBtn" class="btn btn-primary">Save</button>
+      </div>
+      <p class="hint">Start the backend with <code>python app.py</code></p>
+    </section>
+
+    <section class="section">
+      <button id="testBtn" class="btn btn-secondary btn-full">
+        <span id="testIcon">🔌</span>
+        <span id="testLabel">Test Connection</span>
+      </button>
+      <div id="testResult" class="test-result hidden"></div>
+    </section>
+
+    <section class="section how-to">
+      <h2 class="section-title">How to use</h2>
+      <ol class="steps">
+        <li>Start the Python backend server</li>
+        <li>Navigate to any page with code blocks</li>
+        <li>Hover over a code block and click <strong>⚡ Analyze Complexity</strong></li>
+        <li>Or right-click selected code → <strong>Analyze Code Complexity</strong></li>
+      </ol>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Severity Scale</h2>
+      <div class="legend">
+        <div class="legend-item"><span class="dot dot-low"></span> Low (CC ≤ 5)</div>
+        <div class="legend-item"><span class="dot dot-medium"></span> Medium (CC ≤ 10)</div>
+        <div class="legend-item"><span class="dot dot-high"></span> High (CC ≤ 20)</div>
+        <div class="legend-item"><span class="dot dot-very-high"></span> Very High (CC > 20)</div>
+      </div>
+    </section>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
