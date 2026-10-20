@@ -1,0 +1,229 @@
+/* ─── Reset & Base ────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #1e1e2e;
+  --bg2: #181825;
+  --bg3: #11111b;
+  --border: #313244;
+  --text: #cdd6f4;
+  --text-dim: #7f849c;
+  --accent: #89b4fa;
+  --green: #a6e3a1;
+  --yellow: #f9e2af;
+  --orange: #fab387;
+  --red: #f38ba8;
+  --radius: 8px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  width: 340px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 13px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ─── Header ──────────────────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+}
+
+.icon { font-size: 28px; }
+
+.title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.subtitle {
+  font-size: 10px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+/* ─── Section ─────────────────────────────────────────────────────────────── */
+.section {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 2px;
+}
+
+/* ─── Form Controls ───────────────────────────────────────────────────────── */
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.input {
+  flex: 1;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: var(--radius);
+  padding: 7px 10px;
+  font-size: 12px;
+  font-family: monospace;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.input:focus {
+  border-color: var(--accent);
+}
+
+.hint {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.hint code {
+  background: var(--bg3);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: monospace;
+  color: var(--accent);
+}
+
+/* ─── Buttons ─────────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+  font-family: var(--font);
+  white-space: nowrap;
+}
+
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.btn-primary:hover { opacity: 0.9; }
+
+.btn-secondary {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+.btn-full { width: 100%; }
+
+/* ─── Test Result ─────────────────────────────────────────────────────────── */
+.test-result {
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  line-height: 1.5;
+}
+
+.test-result.success {
+  background: rgba(166,227,161,0.1);
+  border: 1px solid rgba(166,227,161,0.3);
+  color: var(--green);
+}
+
+.test-result.error {
+  background: rgba(243,139,168,0.1);
+  border: 1px solid rgba(243,139,168,0.3);
+  color: var(--red);
+}
+
+.hidden { display: none !important; }
+
+/* ─── How To Steps ────────────────────────────────────────────────────────── */
+.steps {
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.steps strong { color: var(--text); }
+
+/* ─── Severity Legend ─────────────────────────────────────────────────────── */
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot-low       { background: var(--green); }
+.dot-medium    { background: var(--yellow); }
+.dot-high      { background: var(--orange); }
+.dot-very-high { background: var(--red); }
+
+/* ─── Save Feedback ───────────────────────────────────────────────────────── */
+.saved-flash {
+  font-size: 11px;
+  color: var(--green);
+  animation: fade-out 1.8s forwards;
+}
+
+@keyframes fade-out {
+  0%   { opacity: 1; }
+  70%  { opacity: 1; }
+  100% { opacity: 0; }
+}
